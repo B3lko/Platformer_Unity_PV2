@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Meta
   - Floor
+  - Bats
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - PlayerLayer
+  - ZombieLayer
   - 
   - 
   - 
@@ -42,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 1898297489
+    locked: 0
+  - name: BehindMap
+    uniqueID: 846584941
     locked: 0
   - name: Mapa
     uniqueID: 2609986353

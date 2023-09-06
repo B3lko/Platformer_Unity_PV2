@@ -6,43 +6,63 @@ public class ZombieController : MonoBehaviour
 {
     [Header("Configuracion")]
     [SerializeField] float puntos = 5f;
-    //[SerializeField] private float fuerzaSalto = 5f;
     [SerializeField] private float WalkSpeed = 2;
-    // Start is called before the first frame update
-
+    [SerializeField] private AudioClip BiteSFX;
+    private AudioSource miAudioSource;
+    bool AuxOnce = false;
+    private Animator miAnimator;
     private Rigidbody2D miRigidbody2D;
-    //private GameObject player;
     private Transform playerTransform;
+    private SpriteRenderer miSpriteRenderer;
+    private BoxCollider2D miBoxCollider2D;
     Vector2 aux; //Poscion en x del jugador y en y del zombie
     private void OnEnable()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerTransform = player.GetComponent<Transform>();  
         miRigidbody2D = GetComponent<Rigidbody2D>();
+        miSpriteRenderer = GetComponent<SpriteRenderer>();
+        miAudioSource = GetComponent<AudioSource>();
+        miAnimator = GetComponent<Animator>();
+        miBoxCollider2D = GetComponent<BoxCollider2D>();
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        aux = new Vector2 (playerTransform.position.x,transform.position.x);
+        aux = new Vector2 (playerTransform.position.x,transform.position.y);
         transform.position = Vector2.MoveTowards(transform.position, aux, WalkSpeed * Time.deltaTime);
-    }
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //miRigidbody2D.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Lifes jugador = collision.gameObject.GetComponent<Lifes>();
-            jugador.ModificarVida(-puntos);
-            Debug.Log(" PUNTOS DE DAÑO REALIZADOS AL JUGADOR "+ puntos);
+        if(aux.x < transform.position.x){
+            miSpriteRenderer.flipX = true;
+        }
+        if(aux.x > transform.position.x){
+            miSpriteRenderer.flipX = false;
         }
     }
-
-
+    private void OnCollisionEnter2D(Collision2D collision){
+        if (collision.gameObject.CompareTag("Player")){
+            miAudioSource.PlayOneShot(BiteSFX);
+            Lifes jugador = collision.gameObject.GetComponent<Lifes>();
+            jugador.ModificarVida(-puntos);
+            miAnimator.SetBool("CEnter",true);
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision){
+        if (collision.gameObject.CompareTag("Player")){
+            Lifes jugador = collision.gameObject.GetComponent<Lifes>();
+            AnimatorClipInfo[] clipInfo = miAnimator.GetCurrentAnimatorClipInfo(0);
+            if(clipInfo[0].clip.name == "Attack" && AuxOnce){
+                miAudioSource.PlayOneShot(BiteSFX);
+                jugador.ModificarVida(-puntos);
+                AuxOnce = false;
+            }
+            if(clipInfo[0].clip.name != "Attack"){
+                AuxOnce = true;
+            }
+        }
+    }  
+    private void OnCollisionExit2D(Collision2D collision){
+        if (collision.gameObject.CompareTag("Player")){
+            miAnimator.SetBool("CEnter",false);
+        }
+    }  
 }
