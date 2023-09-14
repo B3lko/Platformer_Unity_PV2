@@ -16,6 +16,7 @@ public class Lifes : MonoBehaviour
         vida += puntos;
         if(vida <= 0 ){
             miAnimator.SetBool("Death",true);
+            Debug.Log("PERDISTE");
         }
     }
 

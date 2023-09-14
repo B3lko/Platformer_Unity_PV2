@@ -13,7 +13,7 @@ public class MovimientoHorizontal : MonoBehaviour
 
     // Variables de uso interno en el script
     private float moverHorizontal;
-    private Vector2 direccion;
+    //private Vector2 direccion;
 
     // Variable para referenciar otro componente del objeto
     private Rigidbody2D miRigidbody2D;
@@ -29,45 +29,49 @@ public class MovimientoHorizontal : MonoBehaviour
         miSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-private void Start()
-{
-    Speed = WalkSpeed;
-}
+    private void Start(){
+        Speed = WalkSpeed;
+    }
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
-    private void Update()
-    {
+    private void Update(){
        if(Input.GetKey(KeyCode.LeftShift)){
             ShiftPressed = true;
-            Speed = RunSpeed;
         }
         else{
             ShiftPressed = false;
+        }
+        if(ShiftPressed){
+            Speed = RunSpeed;
+        }
+        else{
             Speed = WalkSpeed;
         }
-
-        moverHorizontal = Input.GetAxis("Horizontal");
-        direccion = new Vector2(moverHorizontal, 0f);
-
-        int VelocidadX = (int)miRigidbody2D.velocity.x;
-
-        if(!miSpriteRenderer.flipX && VelocidadX < 0){
-            miSpriteRenderer.flipX = true;
-        }
-        if(miSpriteRenderer.flipX && VelocidadX > 0){
-            miSpriteRenderer.flipX = false;
-        }
-        miAnimator.SetInteger("Speed", VelocidadX);
-    }
-    private void FixedUpdate()
-    {
         if(this.GetComponent<Lifes>().EstasVivo()){
-            if(ShiftPressed && (miRigidbody2D.velocity.x > 1.5 || miRigidbody2D.velocity.x < -1.5)){
+            float moverHorizontal = Input.GetAxis("Horizontal");
+            Vector2 newVelocity = miRigidbody2D.velocity;
+            newVelocity.x = moverHorizontal * Speed;
+            miRigidbody2D.velocity = newVelocity;
+
+            if(!miSpriteRenderer.flipX && newVelocity.x < 0){
+               miSpriteRenderer.flipX = true;
+            }
+            if(miSpriteRenderer.flipX && newVelocity.x > 0){
+                miSpriteRenderer.flipX = false;
+            }
+            float Nvx = (int)newVelocity.x;
+            int Vx = (int)Nvx;
+            miAnimator.SetInteger("Speed", Vx);
+        }
+    }
+    private void FixedUpdate(){
+        if(this.GetComponent<Lifes>().EstasVivo()){
+            if(ShiftPressed){
                 miAnimator.SetBool("Shift",true);
                 RunParticle.Play();
             }
-            else miAnimator.SetBool("Shift",false);
-            if(miRigidbody2D.velocity.x < 10 && miRigidbody2D.velocity.x > -10)
-            miRigidbody2D.AddForce(direccion * Speed);
+            else{
+                miAnimator.SetBool("Shift",false);
+            }   
         }
     }
 }

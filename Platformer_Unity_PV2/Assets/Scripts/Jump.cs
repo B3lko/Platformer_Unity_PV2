@@ -38,14 +38,17 @@ public class Jump : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (!puedoSaltar && !saltando)
-        {
+    private void FixedUpdate(){
+
+        if (!puedoSaltar && !saltando){
             miAnimator.SetBool("JumpMax",false);
             miAnimator.SetBool("EndJump",false);
             miAnimator.SetBool("JumpStart",true);
-            miRigidbody2D.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
+
+            Vector2 newVelocity = miRigidbody2D.velocity;
+            newVelocity.y += fuerzaSalto;
+            miRigidbody2D.velocity = newVelocity;
+
             saltando = true;
             JumpParticle.Play();
             if(miAudioSource.isPlaying){
@@ -67,6 +70,8 @@ public class Jump : MonoBehaviour
                 miAnimator.SetBool("EndJump",true);
             }
             miAnimator.SetBool("JumpStart",false);
+            miAnimator.SetBool("JumpMax",true);
+            miAnimator.SetBool("EndJump",true);
             puedoSaltar = true;
             saltando = false;
             miAudioSource.PlayOneShot(CollisionSFX);
