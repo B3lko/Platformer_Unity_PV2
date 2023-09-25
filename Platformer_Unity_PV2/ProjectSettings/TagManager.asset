@@ -7,6 +7,10 @@ TagManager:
   - Meta
   - Floor
   - Bats
+  - Box
+  - Trap
+  - Boss
+  - SwitchBox
   layers:
   - Default
   - TransparentFX

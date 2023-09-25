@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Boss_Script : MonoBehaviour
 {
+    [SerializeField] private int Lifes = 10;
     private int estadoActual;
     private const int InvokeZombies = 1;
+    private Animator miAnimator;
     //private const int 
 
     // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        miAnimator = GetComponent<Animator>();
     }
 
     //private IEnumerator Boss_Behavior(){
@@ -31,5 +33,14 @@ public class Boss_Script : MonoBehaviour
     void Update()
     {
         
+    }
+    private void OnTriggerEnter2D(Collider2D collision){
+        if (collision.gameObject.CompareTag("Box")){
+            Lifes--;
+            if(Lifes<=0){
+            miAnimator.SetBool("Death",true);
+            }
+            Debug.Log(Lifes);
+        }
     }
 }
