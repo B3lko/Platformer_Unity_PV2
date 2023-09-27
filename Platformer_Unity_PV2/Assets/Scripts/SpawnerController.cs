@@ -13,10 +13,10 @@ public class SpawnerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("SpawnObject", TiempoEspera);
+        //Invoke("SpawnObject", TiempoEspera);
     }
 
-    void SpawnObject(){
+    public void SpawnObject(){
         Instantiate(objectPrefab, transform.position, Quaternion.identity);
     }
 }
