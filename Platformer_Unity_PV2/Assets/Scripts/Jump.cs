@@ -65,7 +65,7 @@ public class Jump : MonoBehaviour
     // Codigo ejecutado cuando el jugador colisiona con otro objeto
     private void OnCollisionEnter2D(Collision2D collision){
         GameObject GO = collision.gameObject;
-        if(GO.tag == "Floor"){
+        if(GO.tag == "Floor" || GO.tag == "Trap"){
             if(saltando){
                 miAnimator.SetBool("EndJump",true);
             }
