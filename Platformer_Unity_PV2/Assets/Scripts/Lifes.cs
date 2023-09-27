@@ -10,10 +10,16 @@ public class Lifes : MonoBehaviour
     [SerializeField] private float InmortalTime;
     private float InicioTime = 0;
     private Animator miAnimator;
+    private SpriteRenderer render;
+    private Color colorOriginal;
+    public float intervaloParpadeo = 0.5f;
+    Color red = new Color(1f, 0f, 0f); // Color rojo puro
     
     public void ModificarVida(float puntos){
         if(Time.time > InmortalTime + InicioTime){
             InicioTime = Time.time;
+            
+            StartCoroutine(Parpadear());
             if(puntos < 0){
                 Blood.Play();
             }
@@ -26,9 +32,23 @@ public class Lifes : MonoBehaviour
         }
     }
 
+     private IEnumerator Parpadear(){
+        while (Time.time < InmortalTime + InicioTime){
+            render.color = red; // Cambia el color a blanco.
+            yield return new WaitForSeconds(intervaloParpadeo);
+
+            render.color = colorOriginal; // Restaura el color original.
+            yield return new WaitForSeconds(intervaloParpadeo);
+        }
+    }
+
     private void OnEnable(){
         miAnimator = GetComponent<Animator>();
+        render = GetComponent<SpriteRenderer>();
+        colorOriginal = render.color;
     }
+
+
 
     public bool EstasVivo(){
         return vida > 0;
