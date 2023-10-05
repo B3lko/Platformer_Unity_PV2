@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: PerfilNormal
   m_EditorClassIdentifier: 
   WalkSpeed: 5
-  RunSpeed: 10
-  xPNextLevel: 28
+  RunSpeed: 6
+  fuerzaSalto: 10
+  JumpSFX: {fileID: 8300000, guid: 3a3f46e1bda92a942a5fb20f649c75cc, type: 3}
+  CollisionSFX: {fileID: 8300000, guid: 328d364e84b72a046be40a44066ec2f8, type: 3}
+  vida: 5
+  InmortalTime: 3
+  intervaloParpadeo: 0.5
+  xPNextLevel: 10
   scaleXp: 3
