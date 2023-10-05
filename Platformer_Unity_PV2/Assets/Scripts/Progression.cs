@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class Progression : MonoBehaviour
 {
-    public int Level;
-    public int xP;
-    public int xPNextLevel;
-    public int scaleXp;
+    private PerfilJugador perfilJugador;
 
+
+void OnEnable()
+{
+    perfilJugador = GetComponent<Player>().perfilJugador;
+}
     public void ModXp(int newXP){
-        this.xP += newXP;
-        Debug.Log("EXP:" + this.xP);
-        if(xP >= xPNextLevel){LevelUp();}
+        perfilJugador.XP += newXP;
+        Debug.Log("EXP:" + perfilJugador.XP);
+        if(perfilJugador.XP >= perfilJugador.XPNextLevel){LevelUp();}
     }
 
     private void LevelUp(){
-        Level++;
-        xP -= xPNextLevel;
-        xPNextLevel += scaleXp;
+        perfilJugador.level++;
+        perfilJugador.XP -= perfilJugador.XPNextLevel;
+        perfilJugador.XPNextLevel += perfilJugador.ScaleXp;
     }
     // Start is called before the first frame update
     void Start()

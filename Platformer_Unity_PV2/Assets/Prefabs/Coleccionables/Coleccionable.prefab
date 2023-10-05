@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5789515669189666031}
   - component: {fileID: 3904695121704791932}
   - component: {fileID: 7372237453783797277}
+  - component: {fileID: -7044226980349698911}
   m_Layer: 0
   m_Name: Coleccionable
   m_TagString: Coleccionable
@@ -130,3 +131,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7044226980349698911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184920011733928783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51845079750d0b43bf588b3427c808d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -5,61 +5,62 @@ using UnityEngine;
 public class Coleccionar : MonoBehaviour
 {
     [SerializeField] private List<GameObject> colleccionables;
-    private Dictionary<string, GameObject> inventario;
     [SerializeField] private GameObject bolsa;
-    private bool presionado = false;
     private Progression progresionJugador;
     [SerializeField] private int Xp;
     [SerializeField] private Canvas cv;
-    //private ScriptA CvS;
     private int index = 1;
     private int aux;
     
     void Awake(){
         colleccionables = new List<GameObject>();
-        inventario = new Dictionary<string,GameObject>();
         progresionJugador = GetComponent<Progression>();
-       
     }
 
 
     void OnTriggerEnter2D(Collider2D other) {
         if(!other.gameObject.CompareTag("Coleccionable")){return;}
-        if(inventario.ContainsKey(other.gameObject.name)){return;}
+        if(!other.gameObject.GetComponent<ColeccionableController>().getPickable()){return;}
+
 
         GameObject nuevoColeccionable = other.gameObject;
         nuevoColeccionable.SetActive(false);
 
-        inventario.Add(nuevoColeccionable.name, nuevoColeccionable);
-
-
         colleccionables.Add(nuevoColeccionable);
-        if(nuevoColeccionable.name == "Coleccionable_Skull"){aux = 1;}
-        if(nuevoColeccionable.name == "Coleccionable_Hearth"){aux = 2;}
-        if(nuevoColeccionable.name == "Coleccionable_Chest"){aux = 3;}
-        if(nuevoColeccionable.name == "Coleccionable_Brain"){aux = 4;}
-        if(nuevoColeccionable.name == "Coleccionable_Teeth"){aux = 5;}
-        cv.GetComponent<Slots_Controller>().SetContent(aux);
 
         nuevoColeccionable.transform.SetParent(bolsa.transform);
         progresionJugador.ModXp(Xp);
+        cv.GetComponent<Slots_Controller>().SetContent(nuevoColeccionable.GetComponent<SpriteRenderer>().sprite.name);
     }
 
-
-    // Start is called before the first frame update
-    void Start(){
-    }
 
     // Update is called once per frame
     void Update(){
 
-        if(Input.GetKeyDown(KeyCode.Alpha1) && colleccionables[index] != null){index = 1;}
-        if(Input.GetKeyDown(KeyCode.Alpha2)){index = 2;}
-        if(Input.GetKeyDown(KeyCode.Alpha3)){index = 3;}
-        if(Input.GetKeyDown(KeyCode.Alpha4)){index = 4;}
-        if(Input.GetKeyDown(KeyCode.Alpha0)){index = 5;}
+        //Segun la tecla presionada se cambia el indice
+        if(Input.GetKeyDown(KeyCode.Alpha1)){index = 1;}
+        else if(Input.GetKeyDown(KeyCode.Alpha2)){index = 2;}
+        else if(Input.GetKeyDown(KeyCode.Alpha3)){index = 3;}
+        else if(Input.GetKeyDown(KeyCode.Alpha4)){index = 4;}
+        else if(Input.GetKeyDown(KeyCode.Alpha5)){index = 5;}
+
+        //Se envia el indice a los slots para actualizar el selector
+        cv.GetComponent<Slots_Controller>().setIndex(index);
+
+        //Si presionamos la Q y existe un objeto en ese slot se dropea y se le avisa al slot que oculte la imagen
         if(Input.GetKeyDown(KeyCode.Q)){
-            UsarInventario(colleccionables[index-1]);
+            string colecAux = cv.GetComponent<Slots_Controller>().GetContent(index);
+            int auxindex = -1;
+            for(int i = 0; i < colleccionables.Count;i++){
+                if(colleccionables[i].GetComponent<SpriteRenderer>().sprite.name == colecAux){
+                    auxindex = i;
+                }
+            }
+            if(auxindex != -1){
+                UsarInventario(colleccionables[auxindex]);
+                cv.GetComponent<Slots_Controller>().Drop(index);
+            }
+            
         }
     }
 
@@ -67,5 +68,6 @@ public class Coleccionar : MonoBehaviour
         Item.transform.SetParent(null);
         Item.transform.position = transform.position;
         Item.SetActive(true);
+        Item.GetComponent<ColeccionableController>().setPickable(false);
     }
 }

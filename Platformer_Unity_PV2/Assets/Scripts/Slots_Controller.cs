@@ -1,90 +1,89 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Slots_Controller : MonoBehaviour
 {
     [SerializeField] private int Size;
     [SerializeField] private float SpaceBetween;
     [SerializeField] private GameObject Slot;
+    [SerializeField] private GameObject Slotparent;
+    [SerializeField] private GameObject Selector;
+
     private List<GameObject> Slots;
-    private List<int> SlotsContent;
+    private List<bool> SlotsContent;
     private List<Sprite> listaSprites;
-    [SerializeField] private GameObject Teeth;
-    [SerializeField] private GameObject Hearth;
-    [SerializeField] private GameObject Skull;
-    [SerializeField] private GameObject Brain;
-    [SerializeField] private GameObject Chest;
+    [SerializeField] private List<Sprite> Listspr;
 
     void OnEnable() {
         Slots = new List<GameObject>();
-        SlotsContent = new List<int>();
+        SlotsContent = new List<bool>();
         listaSprites = new List<Sprite>();
     }
 
 
     void Start(){
-        EscalarObjetos();
         InstanciarObjetos();
+        Selector.transform.SetParent(Slots[0].transform);
+        Selector.transform.position = new Vector3(0,0,1);
+        Selector.SetActive(true);
+        Selector.transform.position = Slots[0].transform.position;
+
     }
+
 
     private void InstanciarObjetos(){
         for (int i = 0; i < Size; i++){
-            Slots.Add(Slot);
-             SlotsContent.Add(0);
-        }
-        Slots[0] = Instantiate(Slots[0], new Vector2(1,10), transform.rotation);
-        Slots[0].transform.SetParent(gameObject.transform);
-        Slots[0].transform.position = new Vector2(gameObject.transform.position.x - 10,gameObject.transform.position.y + 4);
-        for (int i = 1; i < Size; i++){
-            Slots[i] = Instantiate(Slots[i], new Vector2(Slots[i].transform.position.x + SpaceBetween,10), transform.rotation);
-            Slots[i].transform.SetParent(gameObject.transform);
-            Slots[i].transform.position = new Vector2(Slots[i-1].transform.position.x + SpaceBetween,Slots[i-1].transform.position.y);
+            Slots.Add(Instantiate(Slot,transform.position,transform.rotation));
+            Slots[i].transform.SetParent(Slotparent.transform);
+            Slots[i].transform.localScale= new Vector3(1,1,1);
+            SlotsContent.Add(false);
         }
     }
 
-    private void EscalarObjetos(){
-        Hearth.transform.localScale = new Vector3(45.0f,45.0f,0.0f);
-        Skull.transform.localScale = new Vector3(45.0f,45.0f,0.0f);
-        Teeth.transform.localScale = new Vector3(45.0f,45.0f,0.0f);
-        Chest.transform.localScale = new Vector3(45.0f,45.0f,0.0f);
-        Brain.transform.localScale = new Vector3(45.0f,45.0f,0.0f);
-    }
 
-    public void SetContent(int n){
-        n--;
-        for (int i = 0; i < Size; i++){
-            if(SlotsContent[i] == 0){
-                SlotsContent[i] = n;
-                switch(n){
-                    case 0:
-                        Skull.SetActive(true);
-                        Skull.transform.SetParent(Slots[n].transform);
-                        Skull.transform.position = new Vector2(Skull.transform.parent.transform.position.x,Skull.transform.parent.transform.position.y);break;
-                    case 1:
-                        Hearth.SetActive(true);
-                        Hearth.transform.SetParent(Slots[n].transform);
-                        Hearth.transform.position = new Vector2(Hearth.transform.parent.transform.position.x,Hearth.transform.parent.transform.position.y);break;
-                    case 2:
-                        Chest.SetActive(true);
-                        Chest.transform.SetParent(Slots[n].transform);
-                        Chest.transform.position = new Vector2(Chest.transform.parent.transform.position.x,Chest.transform.parent.transform.position.y);break;
-                    case 3:
-                        Brain.SetActive(true);
-                        Brain.transform.SetParent(Slots[n].transform);
-                        Brain.transform.position = new Vector2(Brain.transform.parent.transform.position.x,Brain.transform.parent.transform.position.y);break;
-                    case 4:
-                        Teeth.SetActive(true);
-                        Teeth.transform.SetParent(Slots[n].transform);
-                        Teeth.transform.position = new Vector2(Teeth.transform.parent.transform.position.x,Teeth.transform.parent.transform.position.y);break;
+//Colocar un objeto en el primer Slot disponible
+    public void SetContent(string spr){
+        int aux = 0; 
+        for (int i = 0; i < Listspr.Count; i++){
+            if(spr == Listspr[i].name){
+                aux = i;
+                for (int j = 0; j < SlotsContent.Count; j++){
+                    if(!SlotsContent[j]){
+                        SlotsContent[j] = true;
+                        Sprite sprite = Listspr[aux];
+                        Slots[j].GetComponent<SetItem>().changeSprite(sprite);
+                        return;
+                    }
                 }
-                return;
             }
         }
     }
 
-
-    void Update(){
+//Retornar el nombre del objeto en el slot
+    public string GetContent(int index){
+        index--;
+        if(SlotsContent[index]){
+            return  Slots[index].GetComponent<SetItem>().getName();
+        }
+        else{
+           return "Vacio";
+        }
     }
 
+//Dropear el objeto
+    public void Drop(int index){
+        index--;
+        if(SlotsContent[index]){
+            SlotsContent[index] = false;
+            Slots[index].GetComponent<SetItem>().Drop();
+        }
+    }
+
+//Actualizar el slot en el esta el selector
+    public void setIndex(int index){
+        Selector.transform.SetParent(Slots[index-1].transform);
+        Selector.transform.position = Slots[index-1].transform.position;
+    }
 }
