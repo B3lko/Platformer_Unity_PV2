@@ -5,10 +5,7 @@ using UnityEngine;
 public class MovimientoHorizontal : MonoBehaviour
 {
     // Variables a configurar desde el editor
-    [Header("Configuracion")]
-    [SerializeField] float WalkSpeed = 5f;
-    [SerializeField] float RunSpeed = 10f;
-    float Speed;
+    private PerfilJugador perfilJugador;
      [SerializeField] private ParticleSystem RunParticle;
 
     // Variables de uso interno en el script
@@ -20,6 +17,7 @@ public class MovimientoHorizontal : MonoBehaviour
     private Animator miAnimator;
     private SpriteRenderer miSpriteRenderer;
     bool ShiftPressed = false;
+    private float Speed;
 
     // Codigo ejecutado cuando el objeto se activa en el nivel
     private void OnEnable()
@@ -27,10 +25,11 @@ public class MovimientoHorizontal : MonoBehaviour
         miRigidbody2D = GetComponent<Rigidbody2D>();
         miAnimator = GetComponent<Animator>();
         miSpriteRenderer = GetComponent<SpriteRenderer>();
+        perfilJugador = GetComponent<Player>().perfilJugador;
     }
 
     private void Start(){
-        Speed = WalkSpeed;
+        Speed =  perfilJugador.WalkSpeed1;
     }
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
     private void Update(){
@@ -41,10 +40,10 @@ public class MovimientoHorizontal : MonoBehaviour
             ShiftPressed = false;
         }
         if(ShiftPressed){
-            Speed = RunSpeed;
+            Speed = perfilJugador.RunSpeed1;
         }
         else{
-            Speed = WalkSpeed;
+           Speed = perfilJugador.WalkSpeed1;
         }
         if(this.GetComponent<Lifes>().EstasVivo()){
             float moverHorizontal = Input.GetAxis("Horizontal");

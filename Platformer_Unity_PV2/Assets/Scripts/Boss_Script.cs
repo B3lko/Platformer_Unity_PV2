@@ -28,12 +28,17 @@ public class Boss_Script : MonoBehaviour
     [SerializeField] private float Velocidad_EmbestidaX;
     [SerializeField] private float Velocidad_EmbestidaY;
     //private const int 
+     //player.GetComponent<Progression>();
+    GameObject player;
+    //GameObject playerProgresion = player.GetComponent<Progression>();  
+
 
     // Start is called before the first frame update
     private void OnEnable()
     {
         miAnimator = GetComponent<Animator>();
         miRigidbody2D = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player");  
     }
 
     void Start(){
@@ -119,11 +124,14 @@ public class Boss_Script : MonoBehaviour
     void Update()
     {
         if(Lifes<=0 && Time.time > InicioDeath + TimeDeath){
+            player.GetComponent<Progression>().ModXp(25);
             Destroy(gameObject);
         }
     }
 
     public void ZombieDead(){
+        //player.GetComponent<Progression>();
+         player.GetComponent<Progression>().ModXp(5);
         zombies -= 1;
     }
     private void OnTriggerEnter2D(Collider2D collision){
@@ -133,7 +141,7 @@ public class Boss_Script : MonoBehaviour
                 miAnimator.SetBool("Death",true);
                 Tile.SetActive(false);
                 Blood.Play();
-                float InicioDeath = Time.time;
+                InicioDeath = Time.time;
             }
         }
         if (collision.gameObject.CompareTag("Player")){

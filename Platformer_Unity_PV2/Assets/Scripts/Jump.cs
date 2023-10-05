@@ -5,13 +5,9 @@ using UnityEngine;
 public class Jump : MonoBehaviour
 {
 
-    // Variables a configurar desde el editor
-    [Header("Configuracion")]
-    [SerializeField] private float fuerzaSalto = 5f;
-    [SerializeField] private AudioClip JumpSFX;
-    [SerializeField] private AudioClip CollisionSFX;
+    private PerfilJugador perfilJugador;
     [SerializeField] private ParticleSystem Grass;
-     [SerializeField] private ParticleSystem JumpParticle;
+    [SerializeField] private ParticleSystem JumpParticle;
 
     // Variables de uso interno en el script
     private bool puedoSaltar = true;
@@ -28,6 +24,7 @@ public class Jump : MonoBehaviour
         miRigidbody2D = GetComponent<Rigidbody2D>();
         miAudioSource = GetComponent<AudioSource>();
         miAnimator = GetComponent<Animator>();
+        perfilJugador = GetComponent<Player>().perfilJugador;
     }
 
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
@@ -46,7 +43,7 @@ public class Jump : MonoBehaviour
             miAnimator.SetBool("JumpStart",true);
 
             Vector2 newVelocity = miRigidbody2D.velocity;
-            newVelocity.y += fuerzaSalto;
+            newVelocity.y +=  perfilJugador.FuerzaSalto;
             miRigidbody2D.velocity = newVelocity;
 
             saltando = true;
@@ -54,7 +51,7 @@ public class Jump : MonoBehaviour
             if(miAudioSource.isPlaying){
                 return;
             }
-            miAudioSource.PlayOneShot(JumpSFX);
+            miAudioSource.PlayOneShot(perfilJugador.JumpSFX1);
             
         }
         if(saltando && miRigidbody2D.velocity.y > 0){
@@ -74,7 +71,7 @@ public class Jump : MonoBehaviour
             miAnimator.SetBool("EndJump",true);
             puedoSaltar = true;
             saltando = false;
-            miAudioSource.PlayOneShot(CollisionSFX);
+            miAudioSource.PlayOneShot( perfilJugador.CollisionSFX1);
             Grass.Play();
         }
     }

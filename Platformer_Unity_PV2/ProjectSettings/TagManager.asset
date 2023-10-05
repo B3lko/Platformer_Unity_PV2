@@ -12,6 +12,7 @@ TagManager:
   - Boss
   - SwitchBox
   - Zombie
+  - Coleccionable
   layers:
   - Default
   - TransparentFX
