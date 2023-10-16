@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class Lifes : MonoBehaviour
 {
     [SerializeField] private ParticleSystem Blood;
+    [SerializeField] private UnityEvent<int> OnLivesChanged;
     private PerfilJugador perfilJugador;
     private float InicioTime = 0;
     private Animator miAnimator;
@@ -12,19 +15,25 @@ public class Lifes : MonoBehaviour
     private Color colorOriginal;
     Color red = new Color(1f, 0f, 0f); // Color rojo puro
     
-    public void ModificarVida(float puntos){
+    public void SubtractLife(int puntos){
         if(Time.time > perfilJugador.InmortalTime1 + InicioTime){
+
+           
             InicioTime = Time.time;
             
             StartCoroutine(Parpadear());
-            if(puntos < 0){
+            if(puntos > 0){
                 Blood.Play();
             }
-            perfilJugador.Vida += puntos;
+            perfilJugador.Vida -= puntos;
+
+            OnLivesChanged.Invoke(puntos);
+
             if(perfilJugador.Vida <= 0 ){
                 miAnimator.SetBool("Death",true);
                 Debug.Log("PERDISTE");
             }
+
             Debug.Log("Vidas: " + perfilJugador.Vida);
         }
     }
@@ -44,6 +53,7 @@ public class Lifes : MonoBehaviour
         render = GetComponent<SpriteRenderer>();
         colorOriginal = render.color;
         perfilJugador = GetComponent<Player>().perfilJugador;
+        //OnLivesChanged.Invoke(perfilJugador.Vida);
     }
 
 

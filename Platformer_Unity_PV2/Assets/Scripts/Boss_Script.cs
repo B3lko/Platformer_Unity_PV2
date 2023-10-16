@@ -145,7 +145,7 @@ public class Boss_Script : MonoBehaviour
             }
         }
         if (collision.gameObject.CompareTag("Player")){
-            collision.GetComponent<Lifes>().ModificarVida(-1);
+            collision.GetComponent<Lifes>().SubtractLife(1);
         }
     }
 }

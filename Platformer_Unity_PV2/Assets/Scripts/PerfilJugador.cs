@@ -27,8 +27,8 @@ public class PerfilJugador : ScriptableObject
 
 
     [Header("Lifes")]
-    [SerializeField] private float vida = 5f;
-    public float Vida { get => vida; set => vida = value; }
+    [SerializeField] private int vida = 5;
+    public int Vida { get => vida; set => vida = value; }
     [SerializeField] private float InmortalTime;
     public float InmortalTime1 { get => InmortalTime; set => InmortalTime = value; }
     [SerializeField] private  float intervaloParpadeo = 0.5f;
