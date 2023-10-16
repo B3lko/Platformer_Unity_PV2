@@ -11,7 +11,7 @@ public class BatsCollision : MonoBehaviour
     }
     void OnParticleCollision(GameObject other){
         if(other.CompareTag("Player")){
-            other.GetComponent<Lifes>().ModificarVida(-1);
+            other.GetComponent<Lifes>().SubtractLife(1);
         }
         
     }

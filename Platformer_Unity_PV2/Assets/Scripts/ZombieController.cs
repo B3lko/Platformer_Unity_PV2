@@ -5,7 +5,7 @@ using UnityEngine;
 public class ZombieController : MonoBehaviour
 {
     [Header("Configuracion")]
-    [SerializeField] float puntos = 5f;
+    [SerializeField] int puntos = 5;
     [SerializeField] private float WalkSpeed = 2;
     [SerializeField] private AudioClip BiteSFX;
     private AudioSource miAudioSource;
@@ -42,7 +42,7 @@ public class ZombieController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player")){
             miAudioSource.PlayOneShot(BiteSFX);
             Lifes jugador = collision.gameObject.GetComponent<Lifes>();
-            jugador.ModificarVida(-puntos);
+            jugador.SubtractLife(puntos);
             miAnimator.SetBool("CEnter",true);
         }
     }
@@ -52,7 +52,7 @@ public class ZombieController : MonoBehaviour
             AnimatorClipInfo[] clipInfo = miAnimator.GetCurrentAnimatorClipInfo(0);
             if(clipInfo[0].clip.name == "Attack" && AuxOnce){
                 miAudioSource.PlayOneShot(BiteSFX);
-                jugador.ModificarVida(-puntos);
+                jugador.SubtractLife(puntos);
                 AuxOnce = false;
             }
             if(clipInfo[0].clip.name != "Attack"){
