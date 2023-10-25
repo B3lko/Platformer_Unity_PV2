@@ -175,6 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puntos: 1
   WalkSpeed: 2
+  Lifes: 5
   BiteSFX: {fileID: 8300000, guid: bc95b4e9f023f9342a0fba3b4045f71f, type: 3}
 --- !u!95 &5372391483510964025
 Animator:

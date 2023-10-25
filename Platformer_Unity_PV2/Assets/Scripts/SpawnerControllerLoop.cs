@@ -22,6 +22,7 @@ public class SpawnerControllerLoop : MonoBehaviour
     }
 
     void SpawnObjectLoop(){
+        
         Instantiate(objectPrefab, transform.position, Quaternion.identity);
     }
 }

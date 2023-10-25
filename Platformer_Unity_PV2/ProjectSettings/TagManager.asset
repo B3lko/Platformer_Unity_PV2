@@ -13,6 +13,7 @@ TagManager:
   - SwitchBox
   - Zombie
   - Coleccionable
+  - Bullet
   layers:
   - Default
   - TransparentFX

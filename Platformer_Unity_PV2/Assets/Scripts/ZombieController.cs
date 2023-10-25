@@ -7,6 +7,7 @@ public class ZombieController : MonoBehaviour
     [Header("Configuracion")]
     [SerializeField] int puntos = 5;
     [SerializeField] private float WalkSpeed = 2;
+    [SerializeField] private int Lifes;
     [SerializeField] private AudioClip BiteSFX;
     private AudioSource miAudioSource;
     bool AuxOnce = false;
@@ -15,7 +16,7 @@ public class ZombieController : MonoBehaviour
     private Transform playerTransform;
     private SpriteRenderer miSpriteRenderer;
     private BoxCollider2D miBoxCollider2D;
-    Vector2 aux; //Poscion en x del jugador y en y del zombie
+    Vector2 aux; //Poscion en x del jugador y en y del zombi
     private void OnEnable()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -44,6 +45,16 @@ public class ZombieController : MonoBehaviour
             Lifes jugador = collision.gameObject.GetComponent<Lifes>();
             jugador.SubtractLife(puntos);
             miAnimator.SetBool("CEnter",true);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.CompareTag("Bullet")){
+            Lifes--;
+            Debug.Log(Lifes);
+            if(Lifes <= 0){
+                Destroy(gameObject);
+            }
         }
     }
     private void OnCollisionStay2D(Collision2D collision){
