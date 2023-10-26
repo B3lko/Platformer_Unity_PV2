@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SpawnerLoopRandWithPool : MonoBehaviour
 {
-    // Start is called before the first frame update
-[SerializeField] private GameObject[] objectPrefab; //Se agrega [] porque es un arreglo
-
+    
+    [SerializeField] private GameObject[] objectPrefab; //Se agrega [] porque es un arreglo
+    [SerializeField] private int poolSize;
+    [SerializeField] private List<GameObject> PrefabList;
     [SerializeField]
     [Range(0.5f,5f)]
     private float TiempoEspera;
@@ -18,20 +19,36 @@ public class SpawnerLoopRandWithPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //InvokeRepeating(nameof(SpawnObjectLoop), TiempoEspera, TiempoIntervalo);
+        AddObjectsToPool(poolSize);
     }
 
     private void OnBecameInvisible()
     {
-        CancelInvoke(nameof(SpawnObjectLoop));
+        CancelInvoke(nameof(SpawnObject));
     }
     void OnBecameVisible() {
-        InvokeRepeating(nameof(SpawnObjectLoop), TiempoEspera, TiempoIntervalo);
+        InvokeRepeating(nameof(SpawnObject), TiempoEspera, TiempoIntervalo);
     }
 
-    void SpawnObjectLoop(){
-        int indexAleatorio = Random.Range(0,objectPrefab.Length); //Obtenemos un indice aleatorio
-        GameObject PrefabAleatorio = objectPrefab[indexAleatorio]; //Obtenemos la referencia del array con el indice
-        Instantiate(PrefabAleatorio, transform.position, Quaternion.identity); //Intsnaciamos
+    private void AddObjectsToPool(int amount){
+        for(int i=0; i<amount ;i++){
+            int indexAleatorio = Random.Range(0,objectPrefab.Length); //Obtenemos un indice aleatorio
+            GameObject PrefabAleatorio = objectPrefab[indexAleatorio]; //Obtenemos la referencia del array con el indice
+            GameObject object_aux = Instantiate(PrefabAleatorio, transform.position, Quaternion.identity); //Intsnaciamos
+            object_aux.SetActive(false);
+            PrefabList.Add(object_aux);
+            object_aux.transform.parent = transform;
+        }
+    }
+
+    private void SpawnObject(){
+        for(int i=0;i<PrefabList.Count;i++){
+            if(!PrefabList[i].activeSelf){
+                PrefabList[i].SetActive(true);
+                PrefabList[i].GetComponent<Lifes_Zombie>().SetLifes(10);
+                PrefabList[i].transform.position = transform.position;
+                return;
+            }
+        }
     }
 }

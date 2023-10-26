@@ -19,8 +19,12 @@ public class Lifes_Zombie : MonoBehaviour
         }
     }
 
+    public void SetLifes(int lifes){
+        Lifes = lifes;
+    }
+
     private void DestroyZombie(){
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
 }
