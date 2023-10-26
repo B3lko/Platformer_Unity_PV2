@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 9212173846321351656}
   - component: {fileID: 7258914893165849251}
   - component: {fileID: 8335413133036469250}
+  - component: {fileID: 5402379827630237615}
+  - component: {fileID: -7825416956040798060}
   - component: {fileID: 5372391483510964025}
   - component: {fileID: 8153856551999499576}
   m_Layer: 7
@@ -174,8 +176,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puntos: 1
-  WalkSpeed: 2
   BiteSFX: {fileID: 8300000, guid: bc95b4e9f023f9342a0fba3b4045f71f, type: 3}
+--- !u!114 &5402379827630237615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053660803865632839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6410ed826a17c542a79dc89a717212e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lifes: 5
+--- !u!114 &-7825416956040798060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053660803865632839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d117eb8cecabb6941a64b6705f47ef9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WalkSpeed: 2
 --- !u!95 &5372391483510964025
 Animator:
   serializedVersion: 5

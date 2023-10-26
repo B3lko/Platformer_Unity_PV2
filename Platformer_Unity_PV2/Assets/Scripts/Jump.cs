@@ -30,7 +30,7 @@ public class Jump : MonoBehaviour
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && puedoSaltar && this.GetComponent<Lifes>().EstasVivo()){
+        if (Input.GetKeyDown(KeyCode.W) && puedoSaltar && this.GetComponent<Lifes>().EstasVivo()){
             puedoSaltar = false;
         }
     }

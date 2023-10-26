@@ -9,10 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6397692545325245210}
-  - component: {fileID: 5106445142006767391}
   - component: {fileID: 2582366675358138844}
-  - component: {fileID: 547094263953940831}
-  - component: {fileID: 981910286887771133}
+  - component: {fileID: 915397080760625356}
   m_Layer: 0
   m_Name: SpawnerRandLoop
   m_TagString: Untagged
@@ -35,20 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5106445142006767391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4582553224686516174}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2478f5f7c6ef0d4a8851b97d4683afa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 2053660803865632839, guid: a52f335efa574074ca0e3a549f956d11, type: 3}
-  TiempoEspera: 2.03
 --- !u!212 &2582366675358138844
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101,22 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &547094263953940831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4582553224686516174}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c153176e9400f264e9172b341d53f13b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 2053660803865632839, guid: a52f335efa574074ca0e3a549f956d11, type: 3}
-  TiempoEspera: 2
-  TiempoIntervalo: 1.78
---- !u!114 &981910286887771133
+--- !u!114 &915397080760625356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,12 +94,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4582553224686516174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d7f572677fa88f4b9de6182d6cfbe2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 735e6c98cb85bdc4f8cb53201ed04f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab:
   - {fileID: 2053660803865632839, guid: a52f335efa574074ca0e3a549f956d11, type: 3}
   - {fileID: 6797849405675526051, guid: 94de69dcda0a0c04492c90775788e9a6, type: 3}
   - {fileID: 4608374304807291238, guid: 3fc3fcbe387cff947ba17569c51c37d9, type: 3}
-  TiempoEspera: 2
+  poolSize: 5
+  PrefabList: []
+  TiempoEspera: 5
   TiempoIntervalo: 5
