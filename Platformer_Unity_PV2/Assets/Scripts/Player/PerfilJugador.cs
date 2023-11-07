@@ -37,12 +37,6 @@ public class PerfilJugador : ScriptableObject
 
 
     [Header("Progresion")]
-    [SerializeField] private int xPNextLevel;
-    public int XPNextLevel { get => xPNextLevel; set => xPNextLevel = value; }
     [SerializeField] private int scaleXp;
     public int ScaleXp { get => scaleXp; set => scaleXp = value; }
-    private int Level;
-    public int level { get => Level; set => Level = value;}
-    private int xP;
-    public int XP { get => xP; set => xP = value; }
 }

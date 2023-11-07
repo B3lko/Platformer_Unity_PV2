@@ -27,13 +27,8 @@ public class Boss_Script : MonoBehaviour
     [SerializeField] private float Tiempo_Embestida;
     [SerializeField] private float Velocidad_EmbestidaX;
     [SerializeField] private float Velocidad_EmbestidaY;
-    //private const int 
-     //player.GetComponent<Progression>();
     GameObject player;
-    //GameObject playerProgresion = player.GetComponent<Progression>();  
 
-
-    // Start is called before the first frame update
     private void OnEnable()
     {
         miAnimator = GetComponent<Animator>();
@@ -117,9 +112,6 @@ public class Boss_Script : MonoBehaviour
         estadoActual = Random.Range(0,3);
     }    
         
-    
-
-
     // Update is called once per frame
     void Update()
     {

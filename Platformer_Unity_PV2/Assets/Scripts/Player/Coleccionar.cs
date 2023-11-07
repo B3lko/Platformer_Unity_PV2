@@ -33,6 +33,10 @@ public class Coleccionar : MonoBehaviour
         cv.GetComponent<Slots_Controller>().SetContent(nuevoColeccionable.GetComponent<SpriteRenderer>().sprite.name);
     }
 
+    public void Load(GameObject Coleccionable){
+        colleccionables.Add(Coleccionable);
+    }
+
 
     // Update is called once per frame
     void Update(){
@@ -66,7 +70,7 @@ public class Coleccionar : MonoBehaviour
 
     private void UsarInventario(GameObject Item){
         Item.transform.SetParent(null);
-        Item.transform.position = transform.position;
+        Item.transform.position = new Vector3(transform.position.x,transform.position.y,1.5f);
         Item.SetActive(true);
         Item.GetComponent<ColeccionableController>().setPickable(false);
     }

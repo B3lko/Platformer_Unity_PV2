@@ -7,6 +7,8 @@ public class HUD_Controller : MonoBehaviour
     [SerializeField] private GameObject Hearth;
     [SerializeField] private GameObject ContenedorVidas;
     [SerializeField] private int cantVidas;
+
+    [SerializeField] private GameObject Player;
     private List<GameObject> Hearths;
 
     // Start is called before the first frame update
@@ -27,22 +29,17 @@ public class HUD_Controller : MonoBehaviour
     void CargarContenedor(int cantVidas){
         for(int i = 0; i<cantVidas; i++){
             Hearths.Add(Instantiate(Hearth,ContenedorVidas.transform));
+            if(Player.GetComponent<Lifes>().getLifes() < i+1){
+                Hearths[i].GetComponent<Hearth_Controller>().ChangeState(false);
+            }
         }
+
     }
 
-    public void setDamage(int Damage){
-        Debug.Log("LLego: " + Damage);
-        for(int i = 0; i<Damage;i++){
-            if(Hearths[i]){
-                if(Hearths[i].GetComponent<Hearth_Controller>().getState()){
-                    Hearths[i].GetComponent<Hearth_Controller>().ChangeState(false);
-                }
-                else{
-                     Damage++;
-                }
-            }
-            else{
-                return;
+    public void setLife(int Life){
+        for(int i = 0; i<Hearths.Count; i++){
+            if(i+1>Life){
+                Hearths[i].GetComponent<Hearth_Controller>().ChangeState(false);
             }
         }
     }

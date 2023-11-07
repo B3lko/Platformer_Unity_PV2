@@ -14,7 +14,12 @@ public class Lifes : MonoBehaviour
     private SpriteRenderer render;
     private Color colorOriginal;
     Color red = new Color(1f, 0f, 0f); // Color rojo puro
+
+    private int vidas;
     
+    public int getLifes(){
+        return vidas;
+    }
     public void SubtractLife(int puntos){
         if(Time.time > perfilJugador.InmortalTime1 + InicioTime){
 
@@ -25,16 +30,13 @@ public class Lifes : MonoBehaviour
             if(puntos > 0){
                 Blood.Play();
             }
-            perfilJugador.Vida -= puntos;
+            vidas -= puntos;
 
-            OnLivesChanged.Invoke(puntos);
+            OnLivesChanged.Invoke(vidas);
 
-            if(perfilJugador.Vida <= 0 ){
+            if(vidas <= 0 ){
                 miAnimator.SetBool("Death",true);
-                Debug.Log("PERDISTE");
             }
-
-            Debug.Log("Vidas: " + perfilJugador.Vida);
         }
     }
 
@@ -53,17 +55,14 @@ public class Lifes : MonoBehaviour
         render = GetComponent<SpriteRenderer>();
         colorOriginal = render.color;
         perfilJugador = GetComponent<Player>().perfilJugador;
-        //OnLivesChanged.Invoke(perfilJugador.Vida);
+
+        vidas = perfilJugador.Vida;
+            
+        if(PersistenceManager.Instance.HasKey("Lifes")){
+            vidas = PersistenceManager.Instance.GetInt("Lifes");
+        }
     }
-
-
-
-    public bool EstasVivo(){
-        return perfilJugador.Vida > 0;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision){
-        if (!collision.gameObject.CompareTag("Meta")) { return; }
-        Debug.Log("GANASTE");
+     public bool EstasVivo(){
+        return vidas > 0;
     }
 }

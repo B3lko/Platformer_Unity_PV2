@@ -15,11 +15,6 @@ public class SpawnerLoopRand : MonoBehaviour
     [Range(0.5f,5f)]
     private float TiempoIntervalo;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //InvokeRepeating(nameof(SpawnObjectLoop), TiempoEspera, TiempoIntervalo);
-    }
 
     private void OnBecameInvisible()
     {

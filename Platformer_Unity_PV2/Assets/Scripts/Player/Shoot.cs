@@ -25,7 +25,6 @@ public class Shoot : MonoBehaviour
             miAnimator.Play("Shoot");
             shoot = true;
             GameObject bullet = BulletPool.Instance.RequestBullet();
-            //bullet.transform. = transform;
             if(!miSpriteRenderer.flipX){
                 bullet.transform.position = new Vector2(transform.position.x + 1, transform.position.y);
                 bullet.GetComponent<BulletController>().setDir(true);
