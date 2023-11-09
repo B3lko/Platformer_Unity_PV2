@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
-    // Start is called before the first frame update
     private GameObject SB;
-    //script scpt;
-    //Script script;
-    void Start()
-    {
-       //script = SBC.GetComponent<SwitchBoxController>();
-    }
     void OnEnable() {
-        //scpt = SBC.GetComponent<SwitchBoxController>();
         SB = GameObject.FindGameObjectWithTag("SwitchBox");  
     }
 

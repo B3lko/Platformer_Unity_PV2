@@ -23,17 +23,12 @@ public class Boss_Script : MonoBehaviour
     private Animator miAnimator;
     private Rigidbody2D miRigidbody2D;
     private int zombies = 0;
-
     [SerializeField] private float Tiempo_Embestida;
-    [SerializeField] private float Velocidad_EmbestidaX;
-    [SerializeField] private float Velocidad_EmbestidaY;
-    //private const int 
-     //player.GetComponent<Progression>();
+    [SerializeField] private Transform Pos1;
+    [SerializeField] private Transform Pos2;
+    [SerializeField] private Transform Pos3;
     GameObject player;
-    //GameObject playerProgresion = player.GetComponent<Progression>();  
 
-
-    // Start is called before the first frame update
     private void OnEnable()
     {
         miAnimator = GetComponent<Animator>();
@@ -57,40 +52,45 @@ public class Boss_Script : MonoBehaviour
                     StartCoroutine(InvokeZ());
                     tiempoActualEspera = Tiempo_invocar_Zombies;
                     break;
+ 
                 case InvokeBats:
+
                     StartCoroutine(InvokeB());
                     tiempoActualEspera = Tiempo_invocar_Bats;
                     break;
+
             }
             yield return new WaitForSeconds(tiempoActualEspera);
             ActualizarEstado();
         }
     }
 
-    private IEnumerator MoveC(){
+  
 
-        Vector2 posIncial = transform.position;
-        Vector2 posObjetivo = new Vector2(transform.position.x - Velocidad_EmbestidaX, transform.position.y - Velocidad_EmbestidaY);
-        Vector2 posObjetivo2= new Vector2(transform.position.x + Velocidad_EmbestidaX, transform.position.y - Velocidad_EmbestidaY);
+   private IEnumerator MoveC(){
+
 
         float tiempoInicio = Time.time;
         while (Time.time < tiempoInicio + Tiempo_Embestida){
-            transform.position = Vector2.Lerp(posIncial,posObjetivo, (Time.time - tiempoInicio) / Tiempo_Embestida);
+            transform.position = Vector2.Lerp(Pos1.position,Pos2.position, (Time.time - tiempoInicio) / Tiempo_Embestida);
+            Debug.Log(1);
             yield return null;
         }
 
         tiempoInicio = Time.time;
         while (Time.time < tiempoInicio + Tiempo_Embestida){
-            transform.position = Vector2.Lerp(posObjetivo,posObjetivo2, (Time.time - tiempoInicio) / Tiempo_Embestida);
+            transform.position = Vector2.Lerp(Pos2.position,Pos3.position, (Time.time - tiempoInicio) / Tiempo_Embestida);
+            Debug.Log(2);
             yield return null;
         }
 
         tiempoInicio = Time.time;
         while (Time.time < tiempoInicio + Tiempo_Embestida){
-            transform.position = Vector2.Lerp(posObjetivo2,posIncial, (Time.time - tiempoInicio) / Tiempo_Embestida);
+            transform.position = Vector2.Lerp(Pos3.position,Pos1.position, (Time.time - tiempoInicio) / Tiempo_Embestida);
+            Debug.Log(3);
+
             yield return null;
         }
-        yield return null;
     }
 
     private IEnumerator InvokeZ(){
@@ -117,9 +117,6 @@ public class Boss_Script : MonoBehaviour
         estadoActual = Random.Range(0,3);
     }    
         
-    
-
-
     // Update is called once per frame
     void Update()
     {

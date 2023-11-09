@@ -10,11 +10,15 @@ public class Slots_Controller : MonoBehaviour
     [SerializeField] private GameObject Slot;
     [SerializeField] private GameObject Slotparent;
     [SerializeField] private GameObject Selector;
+    [SerializeField] private GameObject bolsa;
+    [SerializeField] private GameObject Coleccionables;
+
 
     private List<GameObject> Slots;
     private List<bool> SlotsContent;
     private List<Sprite> listaSprites;
     [SerializeField] private List<Sprite> Listspr;
+
 
     void OnEnable() {
         Slots = new List<GameObject>();
@@ -29,9 +33,32 @@ public class Slots_Controller : MonoBehaviour
         Selector.transform.position = new Vector3(0,0,1);
         Selector.SetActive(true);
         Selector.transform.position = Slots[0].transform.position;
-
+        LoadSlots();
     }
 
+    private void LoadSlots(){
+        for(int i = 0; i < Size; i++){
+            if(PersistenceManager.Instance.GetString("Slot" + (1 + i)) != "Vacio" && PersistenceManager.Instance.HasKey("Slot" + (i + 1))){
+                string spr = PersistenceManager.Instance.GetString("Slot" + (i + 1));
+                SlotsContent[i] = true;
+                for(int j = 0; j < Size; j++){
+                    if(spr == Listspr[j].name){
+                        Slots[i].GetComponent<SetItem>().changeSprite(Listspr[j]);
+                        for(int k = 0; k < Coleccionables.transform.childCount; k++){
+                            if(Coleccionables.transform.GetChild(k).GetComponent<SpriteRenderer>().sprite.name == spr){
+                                GameObject GM = Coleccionables.transform.GetChild(k).gameObject;
+                                GM.SetActive(false);
+                                bolsa.transform.parent.GetComponent<Coleccionar>().Load(GM);
+                                Coleccionables.transform.GetChild(k).transform.SetParent(bolsa.transform);
+                            }
+                        }
+                    }
+                }
+                
+            }    
+           
+        }
+    }
 
     private void InstanciarObjetos(){
         for (int i = 0; i < Size; i++){

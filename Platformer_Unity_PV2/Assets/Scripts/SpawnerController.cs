@@ -10,12 +10,6 @@ public class SpawnerController : MonoBehaviour
     [Range(0.5f,5f)]
     private float TiempoEspera;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Invoke("SpawnObject", TiempoEspera);
-    }
-
     public void SpawnObject(){
         Instantiate(objectPrefab, transform.position, Quaternion.identity);
     }

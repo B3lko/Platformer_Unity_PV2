@@ -9,6 +9,7 @@ public class SwitchBoxController : MonoBehaviour
     Vector3 PosBox2;
     private float BoxesOnScene;
     private Animator miAnimator;
+    [SerializeField] private GameObject Label;
     private void OnEnable()
     {
         miAnimator = GetComponent<Animator>();
@@ -34,5 +35,13 @@ public class SwitchBoxController : MonoBehaviour
             miAnimator.SetBool("IsActive",true);
             BoxesOnScene = 2;
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        Label.SetActive(true);
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        Label.SetActive(false);
     }
 }

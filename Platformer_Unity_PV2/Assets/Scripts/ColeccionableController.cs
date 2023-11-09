@@ -8,16 +8,7 @@ public class ColeccionableController : MonoBehaviour
     public float tiempoLimite = 5000.0f;  
     private bool isPickable = true;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    /*void OnTriggerExit2D(Collider2D other) {
-        if(other.gameObject.CompareTag("Player")){
-            isPickable = true;
-        }
-    }*/
     public void setPickable(bool pick){
         isPickable = pick;
         startTime = Time.time;
