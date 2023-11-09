@@ -7,7 +7,8 @@ public class SwitchTrapController : MonoBehaviour
     public GameObject Prefab;
     public bool isDestroyed = false;
     // Start is called before the first frame update
-     private Animator miAnimator;
+    private Animator miAnimator;
+    [SerializeField] private GameObject Label;
     //private const int 
 
     // Start is called before the first frame update
@@ -38,5 +39,12 @@ public class SwitchTrapController : MonoBehaviour
     void Update()
     {
         
+    }
+    void OnTriggerEnter2D(Collider2D other) {
+        Label.SetActive(true);
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        Label.SetActive(false);
     }
 }
